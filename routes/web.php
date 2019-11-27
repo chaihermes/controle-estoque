@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();             //gera rotas de login, de registro.
+
+Route::get('/home', 'HomeController@index')->name('home');

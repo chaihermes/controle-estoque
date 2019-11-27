@@ -19,6 +19,7 @@ class CreateProducts extends Migration
             $table->string('description', 500);
             $table->integer('quantity');
             $table->float('price', 10, 2);
+            $table->unsignedBigInteger('user_id');    //equivalente ao BigIncrements, porém sem o auto_increments.
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

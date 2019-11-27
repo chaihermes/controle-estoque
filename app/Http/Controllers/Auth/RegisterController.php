@@ -48,8 +48,8 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+        return Validator::make($data, [             //pega os name (dos inputs) e dá validações para os campos.
+            'name' => ['required', 'string', 'max:255'],        //faz a validação antes de salvar no banco de dados
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -63,10 +63,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+
+        $nomeArquivo = $data['img']->getClientOriginalName();
+        $date = date('y-m-d');
+        $nomeArquivo = $date.$nomeArquivo;
+        $caminhoImg = "storage/profile/$nomeArquivo";       //concatena o nome do arquivo da imagem. Aqui não precisa todo o caminho das pastas.
+        //salva a imagem dentro do storage
+        $path = $data['img']->storeAs('public/profile',$nomeArquivo);       //aqui precisa dizer em qual lugar do storage vai salvar e o nome do arquivo.
+
+
+        return User::create([           //cria métodos dentro do banco de dados.
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make($data['password']),    //criptografar a senha
+            'img_profile' => $caminhoImg,           //aqui troca o $caminhoImg 
+            'active' => 1
         ]);
     }
 }

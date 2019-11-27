@@ -34,6 +34,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except('logout');          
     }
 }
+//middleware: verifica a condição da requisição, se a condição for atendida, a aplicação devolve a resposta ao usuário.
