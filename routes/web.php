@@ -18,3 +18,7 @@ Route::get('/', function () {
 Auth::routes();             //gera rotas de login, de registro.
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/produtos/cadastrar', 'ProductController@viewForm');      //apenas criando a rota pra enviar pro formulário para cadastrar novo produto
+
+Route::post('/produtos/cadastrar', 'ProductController@create');
