@@ -46,35 +46,56 @@ class ProductController extends Controller
         //     echo "Vai ter que criar!";
         // }
 
-        return view('products.form', ["result"=>$result]);  //o resultado da função é enviado pra view, através de um objeto
+        return view('products.formRegister', ["result"=>$result]);  //o resultado da função é enviado pra view, através de um objeto
     }
 
     public function viewForm(Request $request){
-        return view('products.form');           //aqui usa . ao invés de /, dentro da pasta products, existe o arquivo form.blade.php
+        return view('products.formRegister');           //aqui usa . ao invés de /, dentro da pasta products, existe o arquivo form.blade.php
     }
 
+    public function viewFormUpdate(Request $request, $id=0){  //pegando o id e retornar o formulário de atualização do pproduto
+        //o id=0 é um valor pré determinado, assim, o preenchimento do id, que é opcional, com 0 não existe.
+        $product = Product::find($id);                 //find-> faz o select*from na tabela de produtos. Procura no BD.
+        if($product){
+            return view('products.formUpdate', ["product"=>$product]);      //precisa passar a informação como array associativo. "product" é o nome do array. A variável $product vai pra view.
+        } else {
+            return view('products.formUpdate');
+        }
+        //esse if verifica a existência ou não do id informado. Se o id existe, retorna o formulário com o produto pra atualizar, 
+        //caso contrário, cai no else do formUpdate.blade.php.
+    }
 
     public function update(Request $request){
         //funciona da mesma forma que criar
         //para atualizar devemos buscar um objeto para criar. o 3 é o parâmetro que queremos atualizar. é o id do produto cadastrado.
         //Buscamos um objeto através do ::find(idProduto)
         //Será necessário usar rotas com parâmetro
-        $newProduct = Product::find(3);
-        $newProduct->name = $request->nameProduct;      //name é o campo da coluna na tabela. O nameProduct é o nome que chamamos o name dentro do formulário.
-        $newProduct->description = $request->descriptionProduct;
-        $newProduct->quantity = $request->quantityProduct;
-        $newProduct->price = $request->priceProduct;
-        $newProduct->user_id = Auth()->user()->id;  
+        $product = Product::find($request->idProduct);
+        $product->name = $request->nameProduct;      
+        $product->description = $request->descriptionProduct;
+        $product->quantity = $request->quantityProduct;
+        $product->price = $request->priceProduct;
+        
+        $result = $product->save(); 
+
+        return view('products.formUpdate', ["result"=>$result]);
     }
 
 
-    public function delete(Request $request){
+    public function delete(Request $request, $id=0){
         //para deletar, será necessário usar Product::destroy($id)
+        $result = Product::destroy($id);
+
+        if($result){
+            return redirect('/produtos');
+        }
     }
 
 
     public function viewAllProducts(Request $request){
         //vai precisar do Product::All
+        $listProducts = Product::all();
+        return view('products.products', ['listProducts'=>$listProducts]);       //o primeiro é o nome da pasta, o segundo é o nome da view.
     }
 
     public function viewOneProduct(Request $request){

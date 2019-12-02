@@ -41,9 +41,9 @@
             <div class="col-md-6">
                 @if(isset($result))             <!--verificando se a variável existe-->
                     @if($result)
-                        <h3>Cadastro realizado com sucesso!</h3>
+                        <h3>Cadastro realizado com sucesso!</h3> <!--retorno para o usuário-->
                     @else
-                        <h1>Não foi possível fazer o cadastro</h1>
+                        <h3>Não foi possível fazer o cadastro</h3>
                     @endif
                 @endif
             </div>

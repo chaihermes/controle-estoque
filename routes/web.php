@@ -22,3 +22,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/produtos/cadastrar', 'ProductController@viewForm');      //apenas criando a rota pra enviar pro formulário para cadastrar novo produto
 
 Route::post('/produtos/cadastrar', 'ProductController@create');
+
+Route::get('/produtos/atualizar/{id?}', 'ProductController@viewFormUpdate');      //criando a rota pra buscar o id do produto que será atualizado
+
+Route::post('produtos/atualizar', 'ProductController@update');      //criando a rota que salva as informações atualizadas.
+
+Route::get('/produtos', 'ProductController@viewAllProducts');
+
+Route::get('/produtos/deletar/{id?}', 'ProductController@delete');
