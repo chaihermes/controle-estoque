@@ -12,7 +12,9 @@ class Product extends Model
 
     //A lista de produtos contém a informação de id de usuário. A função users cria a associação com a tabela users e 
     //retornar o id de cada usuário que cadastrou cada produto. Se não fizer assim, teria que fazer com um foreach.
-    public function users(){
+
+    //para o LARAVEL quando usa funções no plural, "users", ele entende que existe uma relação de n:n
+    public function user(){         
         return $this->belongsTo('App\User');       
     }
 

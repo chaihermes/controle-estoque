@@ -13,6 +13,8 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
+
+     //middleware global: todas as rotas passam por aqui:
     protected $middleware = [
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\CheckForMaintenanceMode::class,
@@ -50,6 +52,8 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
+
+     //aqui decide quais rotas passam por aqui:
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
@@ -61,6 +65,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        "checkuser" => \App\Http\Middleware\CheckUser::class,            //registrando a existência do middleware que criamos para verificar se o usuário está logado.
     ];
 
     /**
